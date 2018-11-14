@@ -64,6 +64,15 @@ To edit the code, you have a few options:
 
     For more detailed information, see [this blog](https://blogs.msdn.microsoft.com/webdev/2016/12/01/visual-studio-tools-for-azure-functions/).
 
+* Visual Studio 2017
+
+    To use VS 2017, you need to install the following:
+    * [Visual Studio 2017 15.5 or later](https://www.visualstudio.com/vs/)
+    * [Azure Functions Tools for Visual Studio](https://docs.microsoft.com/en-us/azure/azure-functions/functions-develop-vs)
+        * Azure Functions Tools is included in the Azure development workload
+        * Make sure you include the Azure development workload in your Visual Studio 2017 installation.
+
+    You can develop pre-compiled functions in this platform. See [this article](https://docs.microsoft.com/en-us/azure/azure-functions/functions-develop-vs) for more detailed information.
 
 ## How to run the sample
 
@@ -92,6 +101,7 @@ deployed with the azuredeploy.json template.
 - **AMSClientSecret** - your Service Principal Client Secret.
 - **MediaServicesStorageAccountName** - the storage account name tied to your Media Services account.
 - **MediaServicesStorageAccountKey** - the storage account key tied to your Media Services account.
+- **MediaServicesAttachedStorageCredentials** - list of attached storage accounts with the key, separated by ';'. This is used by some functions. Example "amstore01;gdsgdhjgj=;amstore02;dqghjqfqfjfld="
 - **StorageConnection** -  the functions.json file contains a "StorageConnection" property which must be set to an App Setting value that
   contains a connection string for your input storage account. Otherwise, you may end up with an error message at startup.
   Make sure to add a new AppSetting to your Functions project with the storage account name and connection string, and update
@@ -224,13 +234,12 @@ See the [Read Me for 103-aspera-ingest](/103-aspera-ingest/README.md) for more d
 
 # Media Services Functions for Logic Apps
 ## media-functions-for-logic-app
-Functions : create-empty-asset, sync-asset, live-subclip-analytics, submit-job, check-job-status, check-task-status, publish-asset, return-subtitles, return-analytics, set-media-ru, add-textfile-to-asset, delete-entity.
+Functions : add-textfile-to-asset, check-blob-copy-to-asset-status, check-blob-copy-to-container-status, check-job-status, check-task-status, create-empty-asset, delete-asset-files, delete-entity, generate-ism-manifest, list-asset-files, live-subclip-analytics, publish-asset, return-analytics, return-subtitles, set-media-ru, start-asset-copy-to-container, start-blob-copy-to-asset, submit-job, sync-asset.
 These functions are designed to be called by a Logic App.
 
-One specific patterns to pay attention to here include the check-job-status function which is used to poll for 
-job status from a Logic App workflow.
+One specific patterns to pay attention to here include the check-job-status function which is used to poll for job status from a Logic App workflow.
 
-Four logic apps samples are available as ARM templates in [media-functions-for-logic-app](/media-functions-for-logic-app): One basic VOD worflow (that does encoding), one bacic VOD workflow with blob trigger, one more advanced (that does encoding, indexing, subtitles translation), and one that processes a live stream for analytics. They can be easily deployed through a "Deploy to Azure" button in this section.
+Five logic apps samples are available as ARM templates in [media-functions-for-logic-app](/media-functions-for-logic-app): One basic VOD worflow (that does encoding), one bacic VOD workflow with blob trigger, one more advanced (that does encoding, indexing, subtitles translation), one that processes a live stream for analytics and one which imports pre-encoded files as single asset in Azure Media Services. They can be easily deployed through a "Deploy to Azure" button in this section.
 
 In order to practice the deployment of Azure functions for Media Services and the deployment of a Logic App advanced workflow, a detailed hands-on guide was written. You can find the document [here](/media-functions-for-logic-app/Lab).
 

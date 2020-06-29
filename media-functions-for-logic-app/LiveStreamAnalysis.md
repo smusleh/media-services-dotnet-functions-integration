@@ -13,7 +13,7 @@ The Logic apps workflow does the following :
 * subclips the last minute
 * sends this subclip asset to Video Indexer, which runs in a Media Services Account (recommended)
 
-![Screen capture](images/logicapp6-live1.png?raw=true)
+![Screen capture](images/logicapp5-live1.png?raw=true)
 
 **Step 2 Logic app**
 
@@ -22,7 +22,7 @@ The Logic apps workflow does the following :
 * sends this data to a Cosmos database
 * deletes the Video Indexer video and the subclip asset
 
-![Screen capture](images/logicapp6-live2.png?raw=true)
+![Screen capture](images/logicapp5-live2.png?raw=true)
 
 ## Step by step configuration
 
@@ -34,7 +34,9 @@ Go to the [Video Indexer Developer Portal](https://api-portal.videoindexer.ai/pr
 
 ### 2. Create a Service Principal
 
-In the Azure portal or AZ CLI, create a Service Principal attached to the AMS account previously created. Save the password too. It will be needed in step #3. To do it within the portal, go to the API tab in the account ([follow this article](https://docs.microsoft.com/en-us/azure/media-services/media-services-portal-get-started-with-aad#service-principal-authentication))
+In the Azure portal or AZ CLI, create a Service Principal attached to the AMS account previously created. Save the password too. It will be needed in step #3. To do it within the portal, go to the API tab in the account ([follow this article](https://docs.microsoft.com/en-us/azure/media-services/media-services-portal-get-started-with-aad#service-principal-authentication)).
+
+Please note that it may take some time for the Service Principal to be active.
 
 ### 3. Deploy the Azure functions
 If not already done : fork the repo, deploy Azure Functions and select the **"media-functions-for-logic-app"** Project (IMPORTANT!)
@@ -53,7 +55,7 @@ By default, the template is configured to use a database named "vidb" and a coll
 Create a settings 'CosmosDBConnectionString' in the Azure functions app settings and store in it the Cosmos DB Connection string. It is used by the function to retrieve the insights and pass them to the player.
 
 ### 5. Configure live streaming with AMS
-You should use AMS v2 because subclipping is not yet available in AMS v3. You can use the REST API, SDKs, Azure portal or [AMSE for v2](http://aka.ms/amse).
+You should use AMS v2 because subclipping is not yet available in AMS v3. You can use the REST API, SDKs, Azure portal or [AMSE for v2](http://aka.ms/amseforv2).
 
 Make sure that the AMS streaming endpoint is started.
 To do so, go to the Azure portal or AMSE, select the Azure Media Services account which has been created in step #1, and start the default streaming endpoint.
@@ -70,7 +72,7 @@ Important : setup 10 S3 media reserved units in the Media Services account if yo
 Deploy the two logic apps using this template:
 
 Click the button to deploy the template in your subscription:
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure-Samples%2Fmedia-services-dotnet-functions-integration%2Fmaster%2Fmedia-functions-for-logic-app%2Flogicapp6-livevideoindexer-deploy.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure-Samples%2Fmedia-services-dotnet-functions-integration%2Fmaster%2Fmedia-functions-for-logic-app%2Flogicapp5-livevideoindexer-deploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
@@ -94,9 +96,9 @@ Make sure that you add * to the CORS configuration of the Azure function deploym
 * to increase the performance, it is recommended to limit the resolution of the live stream. This will speed up the processing of Video Indexer. For example, start testing by sending a SD resolution stream (example: 854x480)
 * monitor the job queue(s) and allocate the right number of S3 media reserved units  
 
-![Screen capture](images/logicapp6-live-param1.png?raw=true)
+![Screen capture](images/logicapp5-live-param1.png?raw=true)
 
-![Screen capture](images/logicapp6-live-param2.png?raw=true)
+![Screen capture](images/logicapp5-live-param2.png?raw=true)
 
 ## Functions documentation
 This [page](Functions-documentation.md) lists the functions available and describes the input and output parameters.
